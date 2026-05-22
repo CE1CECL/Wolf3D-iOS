@@ -1,0 +1,17 @@
+name: build
+on: [workflow_dispatch, push]
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 9999
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+      - name: build
+        run: |
+          xcodebuild build -alltargets -project "./wolf3d/code/iphone/wolf3d.xcodeproj" CODE_SIGNING_ALLOWED=NO
+      - name: upload
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: build
+          path: ./
