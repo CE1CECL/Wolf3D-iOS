@@ -10,8 +10,11 @@ jobs:
       - name: build
         run: |
           xcodebuild build -alltargets -project "./wolf3d/code/iphone/wolf3d.xcodeproj" CODE_SIGNING_ALLOWED=NO
+          mkdir -pv "Payload/"
+          cp -rfv "wolf3d/build/Release-iphoneos/wolf3d.app" "Payload/"
+          zip -r9v "wolf3d.ipa" "Payload"
       - name: upload
         uses: actions/upload-artifact@v4.6.2
         with:
           name: build
-          path: ./
+          path: wolf3d.ipa
